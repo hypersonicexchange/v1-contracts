@@ -855,7 +855,7 @@ contract HypersonicRouterV1 is Ownable {
     **************************************************************/
 
     /// @notice Register as a referrer or update your referral fee.
-    /// @param referral_fee The fee percentage in basis points (max 1%)
+    /// @param referral_fee The fee percentage in basis points.
     function register_ref_code(uint64 referral_fee) external {
         if (referral_fee > MAX_REFERRAL_FEE) revert FeeTooHigh(referral_fee, MAX_REFERRAL_FEE);
         uint32 code = beneficiary_code[msg.sender];

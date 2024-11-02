@@ -1,5 +1,5 @@
 <h1 align="left" style="display: flex; align-items: center;">
-  <img src="https://hypersonic.money/brand/logo.svg" alt="Hypersonic" height="28px">
+  <img src="https://hypersonic.exchange/brand/logo.svg" alt="Hypersonic" height="28px">
   &nbsp;<span>Hypersonic V1 Contracts</span>
 </h1>
 

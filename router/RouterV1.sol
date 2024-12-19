@@ -1,5 +1,5 @@
 /*
- ████████████████                             @title          HYPERSONIC L2 ROUTER V1
+ ████████████████                             @title          HYPERSONIC ROUTER V1
     ▓▓▓▓▓▓▓▓▓▓▓█████          ██████████      @website        https://hypersonic.exchange   
       ▓▓▓▓▓▓▓▓▓████████     ████▓▓▓▓▓▓▓       @documentation  https://docs.hypersonic.exchange 
          ▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒          @github         https://github.com/hypersonicexchange 
@@ -624,7 +624,7 @@ contract HypersonicRouterV1 is Ownable {
     /********************** CONSTANTS *****************************/
     address private constant ETH_ADDRESS = address(0);
     uint256 private constant BASIS_POINTS = 10000;
-    uint256 private constant L2_STORAGE_SLOT = 0xc0ffee0000000000000000000000000000000000000000000000000000000000;
+    uint256 private constant STORAGE_SLOT = 0xc0ffee0000000000000000000000000000000000000000000000000000000000;
 
     /*********************** MUTABLES *****************************/
     IHYPERSONICEXECUTOR public HYPERSONIC_EXECUTOR;
@@ -702,7 +702,7 @@ contract HypersonicRouterV1 is Ownable {
                              HYPERSWAP
     ***************************************************************/
 
-    /// @notice L2 Optimized hyperswap using compact calldata encoding.
+    /// @notice Optimized hyperswap using compact calldata encoding.
     /// @param info Encoded GenericInfo struct.
     /// @param path Encoded path to be executed by `HYPERSONIC_EXECUTOR`.
     function hyperswap(bytes calldata info, bytes calldata path) external payable returns (uint256) {
@@ -720,7 +720,7 @@ contract HypersonicRouterV1 is Ownable {
                     new_pos := add(curr_pos, 22)
                 }
                 default { 
-                    res := sload(add(L2_STORAGE_SLOT, sub(pre, 2)))
+                    res := sload(add(STORAGE_SLOT, sub(pre, 2)))
                     new_pos := add(curr_pos, 2)
                 }
             }
@@ -778,10 +778,10 @@ contract HypersonicRouterV1 is Ownable {
     **************************************************************/
 
     /// @notice View function to get a cached address by index.
-    /// @param index Index to lookup into L2_STORAGE_SLOT for usage when storage is cheaper than calldata.
+    /// @param index Index to lookup into STORAGE_SLOT for usage when storage is cheaper than calldata.
     function get_from_cache(uint256 index) external view returns (address result) {
         assembly {
-            result := sload(add(L2_STORAGE_SLOT, index))
+            result := sload(add(STORAGE_SLOT, index))
         }
     }
 
@@ -886,7 +886,7 @@ contract HypersonicRouterV1 is Ownable {
     /// @param addr Address to cache.
     function add_CACHE(uint256 idx, address addr) external onlyOwner {
         assembly {
-            sstore(add(L2_STORAGE_SLOT, idx), addr)
+            sstore(add(STORAGE_SLOT, idx), addr)
         }
     }
 
@@ -899,7 +899,7 @@ contract HypersonicRouterV1 is Ownable {
             for { let i := 0 } lt(i, len) { i := add(i, 1) } {
                 let idx := calldataload(add(idxs.offset, mul(i, 0x20)))
                 let addr := calldataload(add(addrs.offset, mul(i, 0x20)))
-                sstore(add(L2_STORAGE_SLOT, idx), addr)
+                sstore(add(STORAGE_SLOT, idx), addr)
             }
         }
     }

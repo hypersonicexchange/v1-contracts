@@ -8,3 +8,6 @@
 [![API](https://img.shields.io/badge/API-%F0%9F%93%84-green)](https://docs.hypersonic.money/api-reference)
 
 - [L2RouterV1.sol](./router/L2RouterV1.sol)
+- [RouterV1.sol](./router/RouterV1.sol)
+
+Deployments: [docs.hypersonic.exchange/contracts](https://docs.hypersonic.exchange/contracts)
